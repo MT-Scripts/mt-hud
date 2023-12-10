@@ -1,0 +1,141 @@
+@import url('https://fonts.cdnfonts.com/css/alarm-clock');
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+#player-hud-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    bottom: 5px;
+    left: 10px;
+}
+
+.hud-field {
+    height: 25px;
+    width: 60px;
+    border-radius: 3px;
+    border: 1px solid #0000009c;
+    background-color: #0000004c;
+}
+
+.hud-icon {
+    z-index: 1;
+    margin-left: 5px;
+    margin-top: 5px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.853);
+    position: absolute;
+}
+
+#health {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgba(0, 137, 2, 0.650);
+}
+
+#armor {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgba(120, 0, 181, 0.650);
+}
+
+#thirst {
+    transform: rotate(180deg);
+    width: 70%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgba(0, 133, 181, 0.650);
+}
+
+#hunger {
+    transform: rotate(180deg);
+    width: 40%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgba(217, 133, 60, 0.650);
+}
+
+#stamina {
+    width: 40%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgba(116, 116, 116, 0.65);
+}
+
+#vehicle-hud-container {
+    display: none;
+    border-radius: 3px;
+    width: 300px;
+    height: 220px;
+    position: absolute;
+    left: 10px;
+    bottom: 32px;
+    font-family: 'alarm clock';
+    color: #ffffff;
+}
+
+#speed-type {
+    position: absolute;
+    font-size: 15px;
+    bottom: 55px;
+    right: 5px;
+}
+
+#speed {
+    position: absolute;
+    font-size: 55px;
+    bottom: 0px;
+    right: 5px;
+}
+
+#fuel-icon {
+    position: absolute;
+    font-size: 15px;
+    bottom: 8px;
+    right: 45%;
+}
+
+#fuel {
+    position: absolute;
+    font-size: 30px;
+    bottom: 0px;
+    right: 50%;
+}
+
+#gear {
+    position: absolute;
+    font-size: 40px;
+    bottom: 0px;
+    left: 10px;
+}
+
+#street1 {
+    font-variant-caps: all-petite-caps;
+    position: absolute;
+    font-size: 35px;
+    top: 0px;
+    left: 10px;
+}
+
+#street2 {
+    font-variant-caps: all-petite-caps;
+    position: absolute;
+    font-size: 23px;
+    top: 30px;
+    left: 10px;
+}
+
+#direction {
+    position: absolute;
+    font-size: 40px;
+    top: 0px;
+    right: 5px;
+}
