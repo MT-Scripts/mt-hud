@@ -139,3 +139,22 @@ body {
     top: 0px;
     right: 5px;
 }
+
+#voice {
+    background-color: rgba(182, 182, 182, 0.641);
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    width: 50px;
+    height: 4px;
+    border-radius: 5px;
+}
+
+#settings-panel {
+    display: none;
+    background-color: #1b1d21;
+    border-radius: 5px;
+    border: 1.5px solid #565656;
+    width: 800px;
+    height: 500px;
+}

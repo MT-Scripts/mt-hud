@@ -24,6 +24,20 @@ $(document).ready(function(){
             $('#stamina-container').fadeIn('slow')
             $('#stamina').css('width', data.stamina+"%")
         } else { $('#stamina-container').fadeOut('slow') }
+
+        if (data.voice <= 1.5) {
+            $('#voice').css('width', "20px")
+        } else if (data.voice <= 3.0) {
+            $('#voice').css('width', "40px")
+        } else {
+            $('#voice').css('width', "60px")
+        }
+
+        if (data.talking) {
+            $('#voice').css('background-color', "rgba(0, 97, 2, 0.641)")
+        } else {
+            $('#voice').css('background-color', "rgba(182, 182, 182, 0.641)")
+        }
     }
 
     function updateVehicleHUD(data) {
@@ -44,6 +58,29 @@ $(document).ready(function(){
         $('#direction').text(data.direction)
     }
 
+    function showSettingsPanel(data) {
+        $('body').css('display', "flex")
+        $('body').css('justify-content', "center")
+        $('body').css('align-items', "center")
+        $('#settings-panel').fadeIn('slow')
+        $.post('https://mt-hud/setUIFocus');
+    }
+
+    function hideSettingsPanel() {
+        $('#settings-panel').css('display', "none")
+        $('body').css('display', "block")
+        $('body').css('justify-content', "")
+        $('body').css('align-items', "")
+        $.post('https://mt-hud/unsetUIFocus');
+    }
+
+    document.onkeyup = function (event) {
+        const charCode = event.key;
+        if (charCode == "Escape") {
+            hideSettingsPanel();
+        }
+    };
+
     window.addEventListener('message', function(event) {
         const data = event.data;
         if (data.action == 'showPlayerHUD') {
@@ -58,6 +95,8 @@ $(document).ready(function(){
             $('#vehicle-hud-container').fadeOut('slow')
         } else if (data.action == 'updateVehicleHUD') {
             updateVehicleHUD(data)
+        } else if (data.action == 'showSettingsPanel') {
+            showSettingsPanel(data)
         }
     })
 });

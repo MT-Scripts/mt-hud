@@ -37,8 +37,9 @@ end
 CreateThread(function()
     while true do
         local stamina = 0
-        if not IsEntityInWater(player) then stamina = 100 - GetPlayerSprintStaminaRemaining(cache.ped) end
-        if IsEntityInWater(player) then stamina = GetPlayerUnderwaterTimeRemaining(cache.ped) * 10 end
+        local playerId = PlayerId()
+        if not IsEntityInWater(player) then stamina = (100 - GetPlayerSprintStaminaRemaining(playerId)) end
+        if IsEntityInWater(player) then stamina = (GetPlayerUnderwaterTimeRemaining(playerId) * 10) end
         SendNUIMessage({
             action = 'updatePlayerHUD',
             health = (GetEntityHealth(cache.ped) - 100),
@@ -46,8 +47,10 @@ CreateThread(function()
             thirst = thirst,
             hunger = hunger,
             stamina = stamina,
+            voice = LocalPlayer.state['proximity'].distance,
+            talking = NetworkIsPlayerTalking(PlayerId()),
         })
-        if IsPedInAnyVehicle(cache.ped) then 
+        if IsPedInAnyVehicle(cache.ped) then
             if not vehicleHUDActive then
                 vehicleHUDActive = true
                 DisplayRadar(true)
@@ -65,6 +68,8 @@ CreateThread(function()
                 direction = GetDirectionText(GetEntityHeading(cache.vehicle)),
             })
         else if vehicleHUDActive then vehicleHUDActive = false DisplayRadar(false) SendNUIMessage({ action = 'hideVehicleHUD' }) end end
+        SetBigmapActive(false, false)
+        SetRadarZoom(1000)
         Wait(Config.updateDelay)
     end
 end)
@@ -106,4 +111,17 @@ RegisterNetEvent("hud:client:LoadMap", function()
     SetRadarBigmapEnabled(true, false)
     Wait(50)
     SetRadarBigmapEnabled(false, false)
+end)
+
+RegisterCommand('hud', function()
+    SendNUIMessage({ action = 'showSettingsPanel' })
+    SetNuiFocus(true, true)
+end)
+
+RegisterNUICallback('setUIFocus', function()
+    SetNuiFocus(true, true)
+end)
+
+RegisterNUICallback('unsetUIFocus', function()
+    SetNuiFocus(false, false)
 end)
