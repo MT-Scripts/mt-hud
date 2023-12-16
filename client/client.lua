@@ -97,7 +97,7 @@ RegisterNetEvent("hud:client:LoadMap", function()
     local resolutionX, resolutionY = GetActiveScreenResolution()
     local aspectRatio = resolutionX/resolutionY
     local minimapOffset = 0
-    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.005 end
+    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.025 end
     RequestStreamedTextureDict("squaremap", false)
     if not HasStreamedTextureDictLoaded("squaremap") then Wait(150) end
     SetMinimapClipType(0)
@@ -105,7 +105,7 @@ RegisterNetEvent("hud:client:LoadMap", function()
     AddReplaceTexture("platform:/textures/graphics", "radarmask1g", "squaremap", "radarmasksm")
     SetMinimapComponentPosition('minimap', 'L', 'B', -0.0100 + minimapOffset, -0.010, 0.180, 0.258)
     SetMinimapComponentPosition("minimap_mask", "L", "B", 0.0 + minimapOffset, 0.0, 0.128, 0.20)
-    SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.00 + minimapOffset, 0.050, 0.252, 0.338)
+    SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.00 + minimapOffset, 0.065, 0.252, 0.338)
     SetBlipAlpha(GetNorthRadarBlip(), 0)
     SetMinimapClipType(0)
     SetRadarBigmapEnabled(true, false)

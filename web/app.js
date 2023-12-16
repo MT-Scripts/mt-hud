@@ -63,7 +63,86 @@ $(document).ready(function(){
         $('body').css('justify-content', "center")
         $('body').css('align-items', "center")
         $('#settings-panel').fadeIn('slow')
-        $.post('https://mt-hud/setUIFocus');
+        $.post('https://mt-hud/setUIFocus')
+        $('#settings-panel').html(`
+            <h1 id='settings-title'>HUD Settings</h1>
+            <div class='border'></div>
+            <h1 id='settings-hud-colors-title'>HUD Colors</h1>
+            <div id='settings-hud-colors-container'>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-car-hud-color' type='color'>Speedometer</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-map-border-color' type='color'>Map Border</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-health-color' type='color'>Health</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-thirst-color' type='color'>Thirst</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-hunger-color' type='color'>Hunger</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-armor-color' type='color'>Armor</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-stamina-color' type='color'>Stamina</input>
+                </div>
+                <div class='settings-hud-colors-option'>
+                    <input id='settings-icon-color' type='color'>Icons</input>
+                </div>
+            </div>
+        `)
+
+        document.getElementById("settings-car-hud-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#vehicle-hud-container').css('color', value)
+        })
+
+        document.getElementById("settings-map-border-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#vehicle-hud-container').css('border-color', value)
+        })
+
+        document.getElementById("settings-health-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#health').css('background-color', value)
+        })
+
+        document.getElementById("settings-thirst-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#thirst').css('background-color', value)
+        })
+
+        document.getElementById("settings-hunger-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#hunger').css('background-color', value)
+        })
+
+        document.getElementById("settings-armor-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#armor').css('background-color', value)
+        })
+
+        document.getElementById("settings-stamina-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('#stamina').css('background-color', value)
+        })
+
+        document.getElementById("settings-icon-color").addEventListener("input", e => {
+            const value = e.target.value.toLowerCase()
+    
+            $('.hud-icon').css('color', value)
+        })
     }
 
     function hideSettingsPanel() {
@@ -71,7 +150,7 @@ $(document).ready(function(){
         $('body').css('display', "block")
         $('body').css('justify-content', "")
         $('body').css('align-items', "")
-        $.post('https://mt-hud/unsetUIFocus');
+        $.post('https://mt-hud/unsetUIFocus')
     }
 
     document.onkeyup = function (event) {

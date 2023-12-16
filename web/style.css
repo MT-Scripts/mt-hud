@@ -13,6 +13,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     bottom: 5px;
+    gap: 1px;
     left: 10px;
 }
 
@@ -73,12 +74,13 @@ body {
 #vehicle-hud-container {
     display: none;
     border-radius: 3px;
-    width: 300px;
+    width: 298px;
     height: 220px;
     position: absolute;
     left: 10px;
-    bottom: 32px;
+    bottom: 33px;
     font-family: 'alarm clock';
+    border: 2px solid rgba(0, 0, 0, 0.781);
     color: #ffffff;
 }
 
@@ -157,4 +159,71 @@ body {
     border: 1.5px solid #565656;
     width: 800px;
     height: 500px;
+}
+
+#settings-title {
+    width: 100%;
+    color: #c5c5c5;
+    font-family: sans-serif;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.border {
+    margin-top: -5px;
+    width: 100%;
+    border-bottom: 1px solid #565656;
+}
+
+#settings-hud-colors-title {
+    width: 100%;
+    color: #c5c5c5;
+    font-family: sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#settings-hud-colors-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.settings-hud-colors-option {
+    font-family: sans-serif;
+    color: #c5c5c5;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input[type="color" i] {
+    border-radius: 50%;
+    inline-size: 30px;
+    block-size: 30px;
+    padding: 5px;
+    border: 0;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+}
+  
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 1px;
+}
+  
+input[type="color" i]::-webkit-color-swatch {
+    border-radius: 50%;
+}
+  
+input[type="color" i]::-moz-color-swatch {
+    border-radius: 50%;
 }
