@@ -112,16 +112,3 @@ RegisterNetEvent("hud:client:LoadMap", function()
     Wait(50)
     SetRadarBigmapEnabled(false, false)
 end)
-
-RegisterCommand('hud', function()
-    SendNUIMessage({ action = 'showSettingsPanel' })
-    SetNuiFocus(true, true)
-end)
-
-RegisterNUICallback('setUIFocus', function()
-    SetNuiFocus(true, true)
-end)
-
-RegisterNUICallback('unsetUIFocus', function()
-    SetNuiFocus(false, false)
-end)

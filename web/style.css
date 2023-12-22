@@ -21,8 +21,8 @@ body {
     height: 25px;
     width: 60px;
     border-radius: 3px;
-    border: 1px solid #0000009c;
-    background-color: #0000004c;
+    border: 1px solid #1b1d21c8;
+    background-color: #1b1d21c8;
 }
 
 .hud-icon {
@@ -80,7 +80,7 @@ body {
     left: 10px;
     bottom: 33px;
     font-family: 'alarm clock';
-    border: 2px solid rgba(0, 0, 0, 0.781);
+    border: 2px solid #1b1d21;
     color: #ffffff;
 }
 
@@ -143,87 +143,11 @@ body {
 }
 
 #voice {
-    background-color: rgba(182, 182, 182, 0.641);
+    background-color: rgba(182, 182, 182, 0.765);
     position: absolute;
-    bottom: 2px;
+    bottom: 5px;
     left: 50%;
     width: 50px;
     height: 4px;
-    border-radius: 5px;
-}
-
-#settings-panel {
-    display: none;
-    background-color: #1b1d21;
-    border-radius: 5px;
-    border: 1.5px solid #565656;
-    width: 800px;
-    height: 500px;
-}
-
-#settings-title {
-    width: 100%;
-    color: #c5c5c5;
-    font-family: sans-serif;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.border {
-    margin-top: -5px;
-    width: 100%;
-    border-bottom: 1px solid #565656;
-}
-
-#settings-hud-colors-title {
-    width: 100%;
-    color: #c5c5c5;
-    font-family: sans-serif;
-    font-size: 15px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-#settings-hud-colors-container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin: 10px;
-}
-
-.settings-hud-colors-option {
-    font-family: sans-serif;
-    color: #c5c5c5;
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    width: 150px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-input[type="color" i] {
-    border-radius: 50%;
-    inline-size: 30px;
-    block-size: 30px;
-    padding: 5px;
-    border: 0;
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-}
-  
-input[type="color" i]::-webkit-color-swatch-wrapper {
-    padding: 1px;
-}
-  
-input[type="color" i]::-webkit-color-swatch {
-    border-radius: 50%;
-}
-  
-input[type="color" i]::-moz-color-swatch {
-    border-radius: 50%;
+    border-radius: 1px;
 }
