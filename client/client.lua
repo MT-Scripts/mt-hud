@@ -95,7 +95,8 @@ RegisterNetEvent("hud:client:LoadMap", function()
     Wait(100)
     local defaultAspectRatio = 1920/1080
     local resolutionX, resolutionY = GetActiveScreenResolution()
-    local aspectRatio = resolutionX/resolutionY
+    local safezone = GetSafeZoneSize()
+    local aspectRatio = (resolutionX-(safezone/2))/(resolutionY-(safezone/2))
     local minimapOffset = 0
     if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.025 end
     RequestStreamedTextureDict("squaremap", false)
