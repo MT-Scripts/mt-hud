@@ -1,4 +1,4 @@
-local QBCore = exports['qbx-core']:GetCoreObject()
+local QBCore = exports[Config.Core]:GetCoreObject()
 
 function loadPlayerNeeds() -- This is only executed on script start or player load to update the hunger after loaded needs to use the event triggered down here
     local PlayerData = QBCore.Functions.GetPlayerData()
