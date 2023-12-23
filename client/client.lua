@@ -109,7 +109,7 @@ RegisterNetEvent("hud:client:LoadMap", function()
     local safezone = GetSafeZoneSize()
     local aspectRatio = (resolutionX-(safezone/2))/(resolutionY-(safezone/2))
     local minimapOffset = 0
-    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.025 end
+    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.019 end
     RequestStreamedTextureDict("squaremap", false)
     if not HasStreamedTextureDictLoaded("squaremap") then Wait(150) end
     SetMinimapClipType(0)
