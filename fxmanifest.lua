@@ -19,7 +19,6 @@ server_scripts {
 ui_page 'web/index.html'
 
 files {
-    'locales/*.json',
     'web/*.html',
     'web/*.css',
     'web/*.js'
