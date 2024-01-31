@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/alarm-clock');
+@import url("https://fonts.cdnfonts.com/css/alarm-clock");
 
 body {
     margin: 0;
@@ -21,7 +21,7 @@ body {
     height: 25px;
     width: 60px;
     border-radius: 3px;
-    border: 1px solid #1b1d21c8;
+    border: 2px solid #c0c0c0;
     background-color: #1b1d21c8;
 }
 
@@ -38,14 +38,14 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(0, 137, 2, 0.650);
+    background-color: rgba(0, 137, 2, 0.65);
 }
 
 #armor {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(120, 0, 181, 0.650);
+    background-color: rgba(3, 0, 165, 0.65);
 }
 
 #thirst {
@@ -53,7 +53,7 @@ body {
     width: 70%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(0, 133, 181, 0.650);
+    background-color: rgba(0, 133, 181, 0.65);
 }
 
 #hunger {
@@ -61,7 +61,7 @@ body {
     width: 40%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(217, 133, 60, 0.650);
+    background-color: rgba(217, 133, 60, 0.65);
 }
 
 #stamina {
@@ -79,8 +79,8 @@ body {
     position: absolute;
     left: 10px;
     bottom: 33px;
-    font-family: 'alarm clock';
-    border: 2px solid #1b1d21;
+    font-family: "alarm clock";
+    border: 2px solid #c0c0c0;
     color: #ffffff;
 }
 
@@ -147,7 +147,38 @@ body {
     position: absolute;
     bottom: 5px;
     left: 50%;
-    width: 50px;
-    height: 4px;
+    width: 100px;
+    height: 7px;
     border-radius: 1px;
+}
+
+@media screen and (min-width: 2560px) and (min-height: 1440px) {
+    #vehicle-hud-container {
+        width: 397px;
+        height: 293px;
+        left: 13px;
+        bottom: 45px;
+    }
+
+    #player-hud-container {
+        bottom: 10px;
+        gap: 5px;
+    }
+}
+
+@media screen and (min-width: 3840px) and (min-height: 2160px) {
+    #vehicle-hud-container {
+        width: 475px;
+        height: 349px;
+        left: 81px;
+        bottom: 112px;
+        transform: scale(1.25);
+    }
+
+    #player-hud-container {
+        bottom: 20px;
+        left: 150px;
+        width: 550px;
+        transform: scale(1.5);
+    }
 }
