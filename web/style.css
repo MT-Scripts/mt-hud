@@ -146,7 +146,7 @@ body {
     background-color: rgba(182, 182, 182, 0.765);
     position: absolute;
     bottom: 5px;
-    left: 50%;
+    left: 49%;
     width: 100px;
     height: 7px;
     border-radius: 1px;
@@ -163,6 +163,24 @@ body {
     #player-hud-container {
         bottom: 10px;
         gap: 5px;
+    }
+}
+
+@media screen and (min-width: 2560px) and (min-height: 1600px) {
+    #vehicle-hud-container {
+        width: 443px;
+        height: 324px;
+        left: 63px;
+        bottom: 48px;
+    }
+
+    #player-hud-container {
+        bottom: 10px;
+        gap: 5px;
+    }
+
+    .hud-field {
+        width: 80px;
     }
 }
 

@@ -16,7 +16,9 @@ end)
 
 function startHUD()
     local ped = PlayerPedId()
-    if not IsPedInAnyVehicle(ped) then DisplayRadar(false) else
+    if not IsPedInAnyVehicle(ped) then
+        DisplayRadar(false)
+    else
         DisplayRadar(true)
         SendNUIMessage({ action = 'showVehicleHUD' })
     end
