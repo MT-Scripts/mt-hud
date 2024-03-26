@@ -34,36 +34,42 @@ $(document).ready(function () {
         }
 
         if (data.voice <= 1.5) {
-            $("#voice").css("width", "20px");
-        } else if (data.voice <= 3.0) {
             $("#voice").css("width", "40px");
-        } else {
+        } else if (data.voice <= 3.0) {
             $("#voice").css("width", "60px");
+        } else {
+            $("#voice").css("width", "75px");
         }
 
-        if (data.talking) {
-            $("#voice").css("background-color", "rgba(240, 252, 25, 0.8)");
+        if (data.radio) {
+            $("#voice").css("background", "rgba(214, 71, 99, 0.8)");
+        } else if (data.talking) {
+            $("#voice").css("background", "rgba(240, 252, 25, 0.8)");
         } else {
-            $("#voice").css("background-color", "rgba(182, 182, 182, 0.641)");
+            $("#voice").css("background", "rgba(212, 212, 212, 0.8)");
+        }
+    }
+
+    function setSeatbelt(seatbeltOn) {
+        if (seatbeltOn) {
+            $('#seatbelt').css('display', 'none');
+        } else {
+            $('#seatbelt').css('display', '');
         }
     }
 
     function updateVehicleHUD(data) {
         $("#speed").text(data.speed);
-
         $("#fuel").text(data.fuel);
-
         if (data.gear == 0) {
             $("#gear").text("R");
         } else {
             $("#gear").text(data.gear);
         }
-
         $("#street1").text(data.street1);
-
         $("#street2").text(data.street2);
-
         $("#direction").text(data.direction);
+        setSeatbelt(data.seatbelt)
     }
 
     window.addEventListener("message", function (event) {
@@ -80,6 +86,8 @@ $(document).ready(function () {
             $("#vehicle-hud-container").fadeOut("slow");
         } else if (data.action == "updateVehicleHUD") {
             updateVehicleHUD(data);
+        } else if (data.action == 'setSeatbelt') {
+            setSeatbelt(data.seatbelt)
         }
     });
 });

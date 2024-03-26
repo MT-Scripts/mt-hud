@@ -13,15 +13,15 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     bottom: 5px;
-    gap: 1px;
+    gap: 5px;
     left: 10px;
 }
 
 .hud-field {
     height: 25px;
-    width: 60px;
+    width: 75px;
     border-radius: 3px;
-    border: 2px solid #c0c0c0;
+    border: 2px solid #1b1d21c8;
     background-color: #1b1d21c8;
 }
 
@@ -30,45 +30,77 @@ body {
     margin-left: 5px;
     margin-top: 5px;
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.853);
+    color: white;
     position: absolute;
 }
 
 #health {
-    width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(0, 137, 2, 0.65);
+    background-color: rgb(33, 171, 97);
+    transition: width 1.0s ease;
 }
 
-#armor {
-    width: 100%;
+#armour {
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(3, 0, 165, 0.65);
+    background-color: rgb(45, 82, 134);
+    transition: width 1.0s ease;
+
 }
 
 #thirst {
     transform: rotate(180deg);
-    width: 70%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(0, 133, 181, 0.65);
+    background-color: rgb(26, 124, 173);
+    transition: width 1.0s ease;
 }
 
 #hunger {
     transform: rotate(180deg);
-    width: 40%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(217, 133, 60, 0.65);
+    background-color: rgb(221, 110, 20);
+    transition: width 1.0s ease;
 }
 
 #stamina {
-    width: 40%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgba(116, 116, 116, 0.65);
+    background-color: rgb(116, 116, 116);
+    transition: width 1.0s ease;
+}
+
+#oxygen {
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgb(138, 168, 189);
+    transition: width 1.0s ease;
+}
+
+#stress {
+    height: 100%;
+    border-radius: 2px;
+    background-color: rgb(255, 0, 0);
+    transition: width 1.0s ease;
+
+}
+
+#voice {
+    background-color: rgb(155, 155, 155);
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 35px;
+    height: 6.5px;
+    border-radius: 5px;
+    -webkit-transition: width 1.0s ease;
+    -moz-transition: width 1.0s ease;
+    transition: width 1.0s ease;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 2px solid #1b1d21c8;
 }
 
 #vehicle-hud-container {
@@ -98,9 +130,17 @@ body {
     right: 5px;
 }
 
+#seatbelt {
+    position: absolute;
+    font-size: 18px;
+    bottom: 8px;
+    left: 35%;
+    color: rgb(248, 157, 157);
+}
+
 #fuel-icon {
     position: absolute;
-    font-size: 15px;
+    font-size: 18sdpx;
     bottom: 8px;
     right: 45%;
 }
@@ -140,16 +180,6 @@ body {
     font-size: 40px;
     top: 0px;
     right: 5px;
-}
-
-#voice {
-    background-color: rgba(182, 182, 182, 0.765);
-    position: absolute;
-    bottom: 5px;
-    left: 49%;
-    width: 100px;
-    height: 7px;
-    border-radius: 1px;
 }
 
 @media screen and (min-width: 2560px) and (min-height: 1440px) {

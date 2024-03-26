@@ -2,21 +2,22 @@ local vehicleHUDActive = false
 local playerHUDActive = false
 local hunger = 100
 local thirst = 100
+local seatbeltOn = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Wait(500)
-    startHUD()
+    StartHUD()
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() ~= resourceName then return end
     Wait(500)
-    startHUD()
+    StartHUD()
 end)
 
-function startHUD()
+function StartHUD()
     local ped = PlayerPedId()
-    if not IsPedInAnyVehicle(ped) then
+    if not IsPedInAnyVehicle(ped, true) then
         DisplayRadar(false)
     else
         DisplayRadar(true)
@@ -31,7 +32,7 @@ end
 local lastCrossroadUpdate = 0
 local lastCrossroadCheck = {}
 
-function getCrossroads(vehicle)
+function GetCrossroads(vehicle)
     local updateTick = GetGameTimer()
     if updateTick - lastCrossroadUpdate > 1500 then
         local pos = GetEntityCoords(vehicle)
@@ -60,16 +61,18 @@ CreateThread(function()
                 hunger = hunger,
                 stamina = stamina,
                 voice = LocalPlayer.state['proximity'].distance,
+                radio = LocalPlayer.state['radioActive'],
                 talking = NetworkIsPlayerTalking(PlayerId()),
             })
-            if IsPedInAnyVehicle(ped) then
+            if IsPedInAnyVehicle(ped, true) then
                 if not vehicleHUDActive then
                     vehicleHUDActive = true
+
                     DisplayRadar(true)
                     TriggerEvent('hud:client:LoadMap')
                     SendNUIMessage({ action = 'showVehicleHUD' })
                 end
-                local crossroads = getCrossroads(vehicle)
+                local crossroads = GetCrossroads(vehicle)
                 SendNUIMessage({
                     action = 'updateVehicleHUD',
                     speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
@@ -78,6 +81,7 @@ CreateThread(function()
                     street1 = crossroads[1],
                     street2 = crossroads[2],
                     direction = GetDirectionText(GetEntityHeading(vehicle)),
+                    seatbelt = seatbeltOn,
                 })
             else
                 if vehicleHUDActive then
@@ -100,20 +104,33 @@ CreateThread(function()
 end)
 
 function GetDirectionText(heading)
-    if ((heading >= 0 and heading < 45) or (heading >= 315 and heading < 360)) then
+    if ((heading >= 0 and heading < 30) or (heading >= 330 and heading < 360)) then
         return 'N'
-    elseif (heading >= 45 and heading < 135) then
+    elseif (heading >= 30 and heading < 60) then
+        return 'NW'
+    elseif (heading >= 60 and heading < 120) then
         return 'W'
-    elseif (heading >= 135 and heading < 225) then
+    elseif (heading >= 120 and heading < 160) then
+        return 'SW'
+    elseif (heading >= 160 and heading < 210) then
         return 'S'
-    elseif (heading >= 225 and heading < 315) then
+    elseif (heading >= 210 and heading < 240) then
+        return 'SE'
+    elseif (heading >= 240 and heading < 310) then
         return 'E'
+    elseif (heading >= 310 and heading < 330) then
+        return 'NE'
     end
 end
 
 RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst)
     thirst = newThirst
     hunger = newHunger
+end)
+
+RegisterNetEvent('seatbelt:client:ToggleSeatbelt', function()
+    seatbeltOn = not seatbeltOn
+    SendNUIMessage({ action = 'setSeatbelt', seatbelt = seatbeltOn })
 end)
 
 RegisterNetEvent('hud:client:LoadMap', function()
