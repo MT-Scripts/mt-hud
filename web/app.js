@@ -60,19 +60,17 @@ $(document).ready(function () {
 
     function updateVehicleHUD(data) {
         $("#speed").text(data.speed);
+        $('#altitude').text(data.altitude)
+        $('#alt-txt').text(data.altitudetexto)
         $("#fuel").text(data.fuel);
-        if (data.gear == 0) {
-            $("#gear").text("R");
-        } else {
-            $("#gear").text(data.gear);
-        }
+        $("#gear").text(data.gear);
         $("#street1").text(data.street1);
         $("#street2").text(data.street2);
         $("#direction").text(data.direction);
         setSeatbelt(data.seatbelt)
     }
 
-    window.addEventListener("message", function (event) {
+    window.addEventListener("message", function(event) {
         const data = event.data;
         if (data.action == "showPlayerHUD") {
             $("body").fadeIn("slow");
