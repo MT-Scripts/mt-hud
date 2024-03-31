@@ -138,6 +138,22 @@ body {
     color: rgb(248, 157, 157);
 }
 
+#altitude {
+    position: absolute;
+    font-size: 55px;
+    bottom: 6vh;
+    right: 5px;
+    color: #90f6fd; 
+}
+
+#alt-txt {
+    position: absolute;
+    font-size: 15px;
+    bottom: 11vh;
+    color: #90f6fd; 
+    right: 5px;
+}
+
 #fuel-icon {
     position: absolute;
     font-size: 18sdpx;
