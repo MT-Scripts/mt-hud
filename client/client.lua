@@ -3,6 +3,7 @@ local playerHUDActive = false
 local hunger = 100
 local thirst = 100
 local seatbeltOn = false
+local showAltitude = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Wait(500)
@@ -64,7 +65,27 @@ CreateThread(function()
                 radio = LocalPlayer.state['radioActive'],
                 talking = NetworkIsPlayerTalking(PlayerId()),
             })
-            if IsPedInAnyVehicle(ped, true) then
+            if IsPedInAnyHeli(ped) or IsPedInAnyPlane(ped) then
+                if not vehicleHUDActive then
+                    vehicleHUDActive = true
+                    DisplayRadar(true)
+                    TriggerEvent('hud:client:LoadMap')
+                    SendNUIMessage({ action = 'showVehicleHUD' })
+                end
+                local crossroads = GetCrossroads(vehicle)
+                SendNUIMessage({
+                    action = 'updateVehicleHUD',
+                    speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
+                    fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
+                    gear = GetVehicleCurrentGear(vehicle),
+                    street1 = crossroads[1],
+                    street2 = crossroads[2],
+                    direction = GetDirectionText(GetEntityHeading(vehicle)),
+                    seatbelt = seatbeltOn,
+                    altitude = math.ceil(GetEntityCoords(ped).z * 0.5),
+                    altitudetexto = "ALT"
+                })
+            else if IsPedInAnyVehicle(ped, true) then
                 if not vehicleHUDActive then
                     vehicleHUDActive = true
 
@@ -82,6 +103,8 @@ CreateThread(function()
                     street2 = crossroads[2],
                     direction = GetDirectionText(GetEntityHeading(vehicle)),
                     seatbelt = seatbeltOn,
+                    altitude = "",
+                    altitudetexto = ""
                 })
             else
                 if vehicleHUDActive then
@@ -131,6 +154,10 @@ end)
 RegisterNetEvent('seatbelt:client:ToggleSeatbelt', function()
     seatbeltOn = not seatbeltOn
     SendNUIMessage({ action = 'setSeatbelt', seatbelt = seatbeltOn })
+end)
+
+RegisterNetEvent('hud:client:ToggleAirHud', function()
+    showAltitude = not showAltitude
 end)
 
 RegisterNetEvent('hud:client:LoadMap', function()
