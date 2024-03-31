@@ -1,5 +1,5 @@
 fx_version 'cerulean'
-author 'Marttins'
+author 'ChristianBDev'
 description 'Simple Player HUD for FiveM'
 game 'gta5'
 lua54 'yes'
