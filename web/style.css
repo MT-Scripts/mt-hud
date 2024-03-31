@@ -21,8 +21,8 @@ body {
     height: 25px;
     width: 75px;
     border-radius: 3px;
-    border: 2px solid #1b1d21c8;
-    background-color: #1b1d21c8;
+    border: 2px solid rgba(27, 29, 33, 0.8);
+    background-color: rgba(27, 29, 33, 0.8);
 }
 
 .hud-icon {
@@ -30,7 +30,7 @@ body {
     margin-left: 5px;
     margin-top: 5px;
     font-size: 15px;
-    color: white;
+    color: rgba(255, 255, 255, 0.8);
     position: absolute;
 }
 
@@ -38,7 +38,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(33, 171, 97);
+    background-color: rgba(33, 171, 97, 0.8);
     transition: width 1.0s ease;
 }
 
@@ -46,7 +46,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(45, 82, 134);
+    background-color: rgba(45, 82, 134, 0.8);
     transition: width 1.0s ease;
 
 }
@@ -55,7 +55,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(26, 124, 173);
+    background-color: rgba(26, 124, 173, 0.8);
     transform: rotate(180deg);
     transition: width 1.0s ease;
 }
@@ -64,7 +64,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(221, 110, 20);
+    background-color: rgba(221, 110, 20, 0.8);
     transform: rotate(180deg);
     transition: width 1.0s ease;
 }
@@ -73,7 +73,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(116, 116, 116);
+    background-color: rgba(116, 116, 116, 0.8);
     transition: width 1.0s ease;
 }
 
@@ -81,7 +81,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(138, 168, 189);
+    background-color: rgba(138, 168, 189, 0.8);
     transition: width 1.0s ease;
 }
 
@@ -89,13 +89,13 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 2px;
-    background-color: rgb(255, 0, 0);
+    background-color: rgba(255, 0, 0, 0.8);
     transition: width 1.0s ease;
 
 }
 
 #voice {
-    background-color: rgb(155, 155, 155);
+    background-color: rgba(155, 155, 155, 0.8);
     position: absolute;
     bottom: 5px;
     left: 50%;
@@ -107,7 +107,7 @@ body {
     transition: width 1.0s ease;
     left: 50%;
     transform: translate(-50%, 0);
-    border: 2px solid #1b1d21c8;
+    border: 2px solid rgba(27, 29, 33, 0.8);
 }
 
 #vehicle-hud-container {
@@ -119,8 +119,8 @@ body {
     left: 10px;
     bottom: 33px;
     font-family: "alarm clock";
-    border: 2px solid #c0c0c0;
-    color: #ffffff;
+    border: 2px solid rgba(27, 29, 33, 0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 #speed-type {
@@ -150,14 +150,14 @@ body {
     font-size: 55px;
     bottom: 6vh;
     right: 5px;
-    color: #90f6fd; 
+    color: rgba(255, 255, 255, 0.8);
 }
 
 #alt-txt {
     position: absolute;
     font-size: 15px;
     bottom: 11vh;
-    color: #90f6fd; 
+    color: #90f6fd;
     right: 5px;
 }
 
@@ -210,21 +210,11 @@ body {
         width: 397px;
         height: 293px;
         left: 13px;
-        bottom: 45px;
+        bottom: 44px;
     }
 
-    #player-hud-container {
-        bottom: 10px;
-        gap: 5px;
-    }
-}
-
-@media screen and (min-width: 2560px) and (min-height: 1600px) {
-    #vehicle-hud-container {
-        width: 443px;
-        height: 324px;
-        left: 63px;
-        bottom: 48px;
+    #seatbelt {
+        left: 36%;
     }
 
     #player-hud-container {
@@ -233,7 +223,16 @@ body {
     }
 
     .hud-field {
-        width: 80px;
+        width: 90px;
+        height: 25px;
+    }
+
+    .hud-icon {
+        margin-top: 5px;
+    }
+
+    #voice {
+        bottom: 12.5px;
     }
 }
 
@@ -246,10 +245,70 @@ body {
         transform: scale(1.25);
     }
 
+    #speed-type {
+        font-size: 20px;
+        bottom: 38px;
+    }
+
+    #speed {
+        font-size: 36px;
+    }
+
+    #seatbelt {
+        left: 33%;
+        font-size: 24px;
+    }
+
+    #altitude {
+        font-size: 33px;
+    }
+
+    #alt-txt {
+        font-size: 33px;
+    }
+
+    #fuel-icon {
+        font-size: 28px;
+    }
+
+    #fuel {
+        font-size: 30px;
+    }
+
+    #gear {
+        font-size: 36px;
+    }
+
+    #street1 {
+        font-size: 34px;
+    }
+
+    #street2 {
+        font-size: 30px;
+    }
+
+    #direction {
+        font-size: 33px;
+    }
+
     #player-hud-container {
         bottom: 20px;
-        left: 150px;
-        width: 550px;
+        left: 93px;
         transform: scale(1.5);
+    }
+
+    .hud-field {
+        width: 90px;
+        height: 30px;
+    }
+
+    .hud-icon {
+        font-size: 20px;
+        margin-top: 6px;
+    }
+
+    #voice {
+        height: 10px;
+        bottom: 20px;
     }
 }

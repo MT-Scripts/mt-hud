@@ -3,7 +3,7 @@ $(document).ready(function () {
         if (data.health <= 100) {
             $("#health-container").fadeIn("slow");
             $("#health").css("width", data.health + "%");
-        } // else { $('#health-container').fadeOut('slow') }
+        }
 
         if (data.armor > 0) {
             $("#armor-container").fadeIn("slow");
@@ -33,12 +33,30 @@ $(document).ready(function () {
             $("#stamina-container").fadeOut("slow");
         }
 
-        if (data.voice <= 1.5) {
-            $("#voice").css("width", "40px");
-        } else if (data.voice <= 3.0) {
-            $("#voice").css("width", "60px");
+        if ($(window).width() <= 3840 && $(window).height() >= 2160) {
+            if (data.voice <= 1.5) {
+                $("#voice").css("width", "75px");
+            } else if (data.voice <= 3.0) {
+                $("#voice").css("width", "95px");
+            } else {
+                $("#voice").css("width", "115px");
+            }
+        } else if ($(window).width() <= 2560 && $(window).height() >= 1440) {
+            if (data.voice <= 1.5) {
+                $("#voice").css("width", "50px");
+            } else if (data.voice <= 3.0) {
+                $("#voice").css("width", "70px");
+            } else {
+                $("#voice").css("width", "85px");
+            }
         } else {
-            $("#voice").css("width", "75px");
+            if (data.voice <= 1.5) {
+                $("#voice").css("width", "40px");
+            } else if (data.voice <= 3.0) {
+                $("#voice").css("width", "60px");
+            } else {
+                $("#voice").css("width", "75px");
+            }
         }
 
         if (data.radio) {
@@ -70,7 +88,7 @@ $(document).ready(function () {
         setSeatbelt(data.seatbelt)
     }
 
-    window.addEventListener("message", function(event) {
+    window.addEventListener("message", function (event) {
         const data = event.data;
         if (data.action == "showPlayerHUD") {
             $("body").fadeIn("slow");
