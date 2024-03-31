@@ -1,6 +1,6 @@
 $(document).ready(function () {
     function updatePlayerHUD(data) {
-        if (data.health < 100) {
+        if (data.health <= 100) {
             $("#health-container").fadeIn("slow");
             $("#health").css("width", data.health + "%");
         } // else { $('#health-container').fadeOut('slow') }
