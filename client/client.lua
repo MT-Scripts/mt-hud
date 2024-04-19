@@ -3,6 +3,7 @@ local playerHUDActive = false
 local hunger = 100
 local thirst = 100
 local seatbeltOn = false
+local harnessOn = false
 local showAltitude = false
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
@@ -21,6 +22,8 @@ function StartHUD()
     if not IsPedInAnyVehicle(ped, true) then
         DisplayRadar(false)
     else
+        seatbeltOn = false
+        harnessOn = false
         DisplayRadar(true)
         SendNUIMessage({ action = 'showVehicleHUD' })
     end
@@ -83,34 +86,40 @@ CreateThread(function()
                     direction = GetDirectionText(GetEntityHeading(vehicle)),
                     seatbelt = seatbeltOn,
                     altitude = math.ceil(GetEntityCoords(ped).z * 0.5),
-                    altitudetexto = "ALT"
-                })
-            else if IsPedInAnyVehicle(ped, true) then
-                if not vehicleHUDActive then
-                    vehicleHUDActive = true
-
-                    DisplayRadar(true)
-                    TriggerEvent('hud:client:LoadMap')
-                    SendNUIMessage({ action = 'showVehicleHUD' })
-                end
-                local crossroads = GetCrossroads(vehicle)
-                SendNUIMessage({
-                    action = 'updateVehicleHUD',
-                    speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
-                    fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
-                    gear = GetVehicleCurrentGear(vehicle),
-                    street1 = crossroads[1],
-                    street2 = crossroads[2],
-                    direction = GetDirectionText(GetEntityHeading(vehicle)),
-                    seatbelt = seatbeltOn,
-                    altitude = "",
-                    altitudetexto = ""
+                    altitudetexto = 'ALT'
                 })
             else
-                if vehicleHUDActive then
-                    vehicleHUDActive = false
-                    DisplayRadar(false)
-                    SendNUIMessage({ action = 'hideVehicleHUD' })
+                if IsPedInAnyVehicle(ped, true) then
+                    if not vehicleHUDActive then
+                        vehicleHUDActive = true
+
+                        DisplayRadar(true)
+                        TriggerEvent('hud:client:LoadMap')
+                        SendNUIMessage({ action = 'showVehicleHUD' })
+                    end
+                    local crossroads = GetCrossroads(vehicle)
+                    SendNUIMessage({
+                        action = 'updateVehicleHUD',
+                        speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
+                        fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
+                        gear = GetVehicleCurrentGear(vehicle),
+                        street1 = crossroads[1],
+                        street2 = crossroads[2],
+                        direction = GetDirectionText(GetEntityHeading(vehicle)),
+                        seatbelt = seatbeltOn or harnessOn,
+                        altitude = '',
+                        altitudetexto = ''
+                    })
+                    if not IsPedInAnyVehicle(ped, false) then
+                        seatbeltOn = false
+                        harnessOn = false
+                    end
+                else
+                    if vehicleHUDActive then
+                        vehicleHUDActive = false
+                        DisplayRadar(false)
+                        SendNUIMessage({ action = 'hideVehicleHUD' })
+                    end
                 end
             end
         else
@@ -154,6 +163,11 @@ end)
 RegisterNetEvent('seatbelt:client:ToggleSeatbelt', function()
     seatbeltOn = not seatbeltOn
     SendNUIMessage({ action = 'setSeatbelt', seatbelt = seatbeltOn })
+end)
+
+RegisterNetEvent('seatbelt:client:ToggleHarness', function()
+    harnessOn = not harnessOn
+    SendNUIMessage({ action = 'setSeatbelt', seatbelt = harnessOn })
 end)
 
 RegisterNetEvent('hud:client:ToggleAirHud', function()

@@ -15,6 +15,7 @@ body {
     bottom: 5px;
     gap: 5px;
     left: 10px;
+    text-shadow: 0px 0px 5px black;
 }
 
 .hud-field {
@@ -27,10 +28,10 @@ body {
 
 .hud-icon {
     z-index: 1;
-    margin-left: 5px;
-    margin-top: 5px;
+    margin-left: 7.5px;
+    margin-top: 2.5px;
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.8);
+    color: white;
     position: absolute;
 }
 
@@ -121,6 +122,7 @@ body {
     font-family: "alarm clock";
     border: 2px solid rgba(27, 29, 33, 0.8);
     color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0px 0px 10px black;
 }
 
 #speed-type {
@@ -214,7 +216,7 @@ body {
     }
 
     #seatbelt {
-        left: 36%;
+        left: 33%;
     }
 
     #player-hud-container {
