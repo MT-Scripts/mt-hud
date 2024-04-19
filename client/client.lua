@@ -2,31 +2,41 @@ local vehicleHUDActive = false
 local playerHUDActive = false
 local hunger = 100
 local thirst = 100
+local seatbeltOn = false
+local harnessOn = false
+local showAltitude = false
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     Wait(500)
-    startHUD()
+    StartHUD()
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
     if GetCurrentResourceName() ~= resourceName then return end
     Wait(500)
-    startHUD()
+    StartHUD()
 end)
 
-function startHUD()
+function StartHUD()
     local ped = PlayerPedId()
-    if not IsPedInAnyVehicle(ped) then DisplayRadar(false) else DisplayRadar(true) SendNUIMessage({ action = 'showVehicleHUD' }) end
+    if not IsPedInAnyVehicle(ped, true) then
+        DisplayRadar(false)
+    else
+        seatbeltOn = false
+        harnessOn = false
+        DisplayRadar(true)
+        SendNUIMessage({ action = 'showVehicleHUD' })
+    end
     TriggerEvent('hud:client:LoadMap')
     SendNUIMessage({ action = 'showPlayerHUD' })
     playerHUDActive = true
-    loadPlayerNeeds()
+    LoadPlayerNeeds()
 end
 
 local lastCrossroadUpdate = 0
 local lastCrossroadCheck = {}
 
-function getCrossroads(vehicle)
+function GetCrossroads(vehicle)
     local updateTick = GetGameTimer()
     if updateTick - lastCrossroadUpdate > 1500 then
         local pos = GetEntityCoords(vehicle)
@@ -55,16 +65,17 @@ CreateThread(function()
                 hunger = hunger,
                 stamina = stamina,
                 voice = LocalPlayer.state['proximity'].distance,
+                radio = LocalPlayer.state['radioActive'],
                 talking = NetworkIsPlayerTalking(PlayerId()),
             })
-            if IsPedInAnyVehicle(ped) then
+            if IsPedInAnyHeli(ped) or IsPedInAnyPlane(ped) then
                 if not vehicleHUDActive then
                     vehicleHUDActive = true
                     DisplayRadar(true)
                     TriggerEvent('hud:client:LoadMap')
                     SendNUIMessage({ action = 'showVehicleHUD' })
                 end
-                local crossroads = getCrossroads(vehicle)
+                local crossroads = GetCrossroads(vehicle)
                 SendNUIMessage({
                     action = 'updateVehicleHUD',
                     speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
@@ -73,8 +84,44 @@ CreateThread(function()
                     street1 = crossroads[1],
                     street2 = crossroads[2],
                     direction = GetDirectionText(GetEntityHeading(vehicle)),
+                    seatbelt = seatbeltOn,
+                    altitude = math.ceil(GetEntityCoords(ped).z * 0.5),
+                    altitudetexto = 'ALT'
                 })
-            else if vehicleHUDActive then vehicleHUDActive = false DisplayRadar(false) SendNUIMessage({ action = 'hideVehicleHUD' }) end end
+            else
+                if IsPedInAnyVehicle(ped, true) then
+                    if not vehicleHUDActive then
+                        vehicleHUDActive = true
+
+                        DisplayRadar(true)
+                        TriggerEvent('hud:client:LoadMap')
+                        SendNUIMessage({ action = 'showVehicleHUD' })
+                    end
+                    local crossroads = GetCrossroads(vehicle)
+                    SendNUIMessage({
+                        action = 'updateVehicleHUD',
+                        speed = math.ceil(GetEntitySpeed(vehicle) * Config.speedMultiplier),
+                        fuel = math.ceil(GetVehicleFuelLevel(vehicle)),
+                        gear = GetVehicleCurrentGear(vehicle),
+                        street1 = crossroads[1],
+                        street2 = crossroads[2],
+                        direction = GetDirectionText(GetEntityHeading(vehicle)),
+                        seatbelt = seatbeltOn or harnessOn,
+                        altitude = '',
+                        altitudetexto = ''
+                    })
+                    if not IsPedInAnyVehicle(ped, false) then
+                        seatbeltOn = false
+                        harnessOn = false
+                    end
+                else
+                    if vehicleHUDActive then
+                        vehicleHUDActive = false
+                        DisplayRadar(false)
+                        SendNUIMessage({ action = 'hideVehicleHUD' })
+                    end
+                end
+            end
         else
             vehicleHUDActive = false
             DisplayRadar(false)
@@ -89,14 +136,22 @@ CreateThread(function()
 end)
 
 function GetDirectionText(heading)
-    if ((heading >= 0 and heading < 45) or (heading >= 315 and heading < 360)) then
-        return "N"
-    elseif (heading >= 45 and heading < 135) then
-        return "W"
-    elseif (heading >=135 and heading < 225) then
-        return "S"
-    elseif (heading >= 225 and heading < 315) then
-        return "E"
+    if ((heading >= 0 and heading < 30) or (heading >= 330 and heading < 360)) then
+        return 'N'
+    elseif (heading >= 30 and heading < 60) then
+        return 'NW'
+    elseif (heading >= 60 and heading < 120) then
+        return 'W'
+    elseif (heading >= 120 and heading < 160) then
+        return 'SW'
+    elseif (heading >= 160 and heading < 210) then
+        return 'S'
+    elseif (heading >= 210 and heading < 240) then
+        return 'SE'
+    elseif (heading >= 240 and heading < 310) then
+        return 'E'
+    elseif (heading >= 310 and heading < 330) then
+        return 'NE'
     end
 end
 
@@ -105,21 +160,35 @@ RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst)
     hunger = newHunger
 end)
 
-RegisterNetEvent("hud:client:LoadMap", function()
+RegisterNetEvent('seatbelt:client:ToggleSeatbelt', function()
+    seatbeltOn = not seatbeltOn
+    SendNUIMessage({ action = 'setSeatbelt', seatbelt = seatbeltOn })
+end)
+
+RegisterNetEvent('seatbelt:client:ToggleHarness', function()
+    harnessOn = not harnessOn
+    SendNUIMessage({ action = 'setSeatbelt', seatbelt = harnessOn })
+end)
+
+RegisterNetEvent('hud:client:ToggleAirHud', function()
+    showAltitude = not showAltitude
+end)
+
+RegisterNetEvent('hud:client:LoadMap', function()
     Wait(100)
-    local defaultAspectRatio = 1920/1080
+    local defaultAspectRatio = 1920 / 1080
     local resolutionX, resolutionY = GetActiveScreenResolution()
     local safezone = GetSafeZoneSize()
-    local aspectRatio = (resolutionX-(safezone/2))/(resolutionY-(safezone/2))
+    local aspectRatio = (resolutionX - (safezone / 2)) / (resolutionY - (safezone / 2))
     local minimapOffset = 0
-    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.019 end
-    RequestStreamedTextureDict("squaremap", false)
-    if not HasStreamedTextureDictLoaded("squaremap") then Wait(150) end
+    if aspectRatio > defaultAspectRatio then minimapOffset = ((defaultAspectRatio - aspectRatio) / 3.6) - 0.019 end
+    RequestStreamedTextureDict('squaremap', false)
+    if not HasStreamedTextureDictLoaded('squaremap') then Wait(150) end
     SetMinimapClipType(0)
-    AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "squaremap", "radarmasksm")
-    AddReplaceTexture("platform:/textures/graphics", "radarmask1g", "squaremap", "radarmasksm")
+    AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'squaremap', 'radarmasksm')
+    AddReplaceTexture('platform:/textures/graphics', 'radarmask1g', 'squaremap', 'radarmasksm')
     SetMinimapComponentPosition('minimap', 'L', 'B', 0.0 + minimapOffset, -0.047, 0.1638, 0.183)
-    SetMinimapComponentPosition("minimap_mask", "L", "B", 0.0 + minimapOffset, 0.0, 0.128, 0.20)
+    SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.0 + minimapOffset, 0.0, 0.128, 0.20)
     SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.00 + minimapOffset, 0.065, 0.252, 0.338)
     SetBlipAlpha(GetNorthRadarBlip(), 0)
     SetMinimapClipType(0)
